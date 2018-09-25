@@ -2,6 +2,11 @@
 import boto3
 import logging
 
+logging.basicConfig(level=20, format='%(asctime)s: %(name)s | LOG: %(message)s')
+log = logging.getLogger(__name__)
+
+#Takes in a tag and a value to search for and returns an dictionary of information
+#about the instance: InstanceID, PriviateIP, PublicIP, InstanceState
 def FindInstance(tag, value):
     log.info('Running: FindInstance')
 
@@ -23,12 +28,9 @@ def FindInstance(tag, value):
     return instanceinfo
     
 
-def main():
-    print(FindInstance("Name", "wistful"))
+def FindSSMParam(tag, value):
+    log.info('Running: FindSSMParam')
 
-if __name__ == '__main__':
-    #Logging Setup
-    logging.basicConfig(level=20, format='%(asctime)s: %(name)s | LOG: %(message)s')
-    log = logging.getLogger(__name__)
-
-    main()
+    ssm = boto3.client('ssm')
+    res = ssm.describe_parameters(Filters=[{'Name': ('tag:'+tag)}])
+    return True
