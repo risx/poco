@@ -14,11 +14,26 @@ def FindInstance(tag, value):
     res = ec2.describe_instances(Filters=[{'Name': ('tag:'+tag),'Values': [value]}])
 
     try:
+        instance_state = res['Reservations'][0]['Instances'][0]['State']['Name']
+
+        try:
+            instance_id = res['Reservations'][0]['Instances'][0]['InstanceId']
+        except:
+            instance_id = 'null'
+        try:
+            private_ip = res['Reservations'][0]['Instances'][0]['PrivateIpAddress']
+        except:
+            private_ip = 'null'
+        try:
+            public_ip = res['Reservations'][0]['Instances'][0]['PublicIpAddress']
+        except:
+            public_ip = 'null'
+
         instanceinfo = {
-            'InstanceID': res['Reservations'][0]['Instances'][0]['InstanceId'],
-            'InstancePrivateIP': res['Reservations'][0]['Instances'][0]['PrivateIpAddress'],
-            'InstanceIP': res['Reservations'][0]['Instances'][0]['PublicIpAddress'],
-            'InstanceState': res['Reservations'][0]['Instances'][0]['State']['Name']
+            'InstanceID': instance_id,
+            'InstancePrivateIP': private_ip,
+            'InstanceIP': public_ip,
+            'InstanceState': instance_state
         }
 
     except IndexError as e:
