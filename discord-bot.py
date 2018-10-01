@@ -16,8 +16,11 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.content.startswith('!status'):
-        if (botow.FindInstance('Name','wistful')):
-            instance_dic = botow.FindInstance('Name','wistful')
+        tag_name = message.content.split()[1]
+        value_name = message.content.split()[2]
+        print(tag_name, value_name)
+        if (botow.FindInstance(tag_name,value_name)):
+            instance_dic = botow.FindInstance(tag_name,value_name)
 
             em = discord.Embed(title='Instance Information', description='Instance Found', colour=0x00ff00)
             em.add_field(name='Instance State', value=str(instance_dic['InstanceState']), inline=False)

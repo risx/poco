@@ -8,7 +8,7 @@ log = logging.getLogger(__name__)
 #Takes in a tag and a value to search for and returns an dictionary of information
 #about the instance: InstanceID, PriviateIP, PublicIP, InstanceState
 def FindInstance(tag, value):
-    log.info('Running: FindInstance')
+    log.info('Running: FindInstance', tag, value)
 
     ec2 = boto3.client('ec2')
     res = ec2.describe_instances(Filters=[{'Name': ('tag:'+tag),'Values': [value]}])
