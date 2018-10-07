@@ -1,7 +1,7 @@
 import discord
 import asyncio
 import json
-import botow
+import sui
 
 client = discord.Client()
 secrets = ''
@@ -19,7 +19,7 @@ async def on_message(message):
         tag_name = message.content.split()[1]
         value_name = message.content.split()[2]
 
-        instance = botow.InstanceHandler(tag_name, value_name)
+        instance = sui.InstanceHandler(tag_name, value_name)
 
         if (instance.find()):
             instance_dic = instance.find()
@@ -39,7 +39,7 @@ async def on_message(message):
         tag_name = message.content.split()[1]
         value_name = message.content.split()[2]
 
-        parameter = botow.ParameterHandler(tag_name, value_name)
+        parameter = sui.ParameterHandler(tag_name, value_name)
 
         if (parameter.find()):
             ssm_dic = parameter.find()
