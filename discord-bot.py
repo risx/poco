@@ -19,8 +19,10 @@ async def on_message(message):
         tag_name = message.content.split()[1]
         value_name = message.content.split()[2]
 
-        if (botow.FindInstance(tag_name, value_name)):
-            instance_dic = botow.FindInstance(tag_name,value_name)
+        instance = botow.InstanceHandler(tag_name, value_name)
+
+        if (instance.find()):
+            instance_dic = instance.find()
 
             em = discord.Embed(title='Instance Information', description='Instance Found', colour=0x00ff00)
             em.add_field(name='Instance State', value=str(instance_dic['InstanceState']), inline=False)
@@ -37,8 +39,10 @@ async def on_message(message):
         tag_name = message.content.split()[1]
         value_name = message.content.split()[2]
 
-        if (botow.FindSSMParam(tag_name, value_name)):
-            ssm_dic = botow.FindSSMParam(tag_name, value_name)
+        parameter = botow.ParameterHandler(tag_name, value_name)
+
+        if (parameter.find()):
+            ssm_dic = parameter.find()
 
             em = discord.Embed(title='Paramter Information', description='Parameter Found!', colour=0x00ff00)
             em.add_field(name='Parameter Value', value=str(ssm_dic), inline=False)
