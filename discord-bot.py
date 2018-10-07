@@ -15,11 +15,11 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.content.startswith('!status'):
+    if message.content.startswith('!instance'):
         tag_name = message.content.split()[1]
         value_name = message.content.split()[2]
-        print(tag_name, value_name)
-        if (botow.FindInstance(tag_name,value_name)):
+
+        if (botow.FindInstance(tag_name, value_name)):
             instance_dic = botow.FindInstance(tag_name,value_name)
 
             em = discord.Embed(title='Instance Information', description='Instance Found', colour=0x00ff00)
@@ -30,6 +30,21 @@ async def on_message(message):
 
         else:
             em = discord.Embed(title='Instance Information',description='Instance does not exist.', colour=0xff0000)
+
+        await client.send_message(message.channel, embed=em)
+
+    elif message.content.startswith('!ssm'):
+        tag_name = message.content.split()[1]
+        value_name = message.content.split()[2]
+
+        if (botow.FindSSMParam(tag_name, value_name)):
+            ssm_dic = botow.FindSSMParam(tag_name, value_name)
+
+            em = discord.Embed(title='Paramter Information', description='Parameter Found!', colour=0x00ff00)
+            em.add_field(name='Parameter Value', value=str(ssm_dic), inline=False)
+
+        else:
+            em = discord.Embed(title='Parameter Information',description='Parameter does not exist.', colour=0xff0000)
 
         await client.send_message(message.channel, embed=em)
 

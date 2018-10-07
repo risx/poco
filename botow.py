@@ -47,5 +47,15 @@ def FindSSMParam(tag, value):
     log.info('Running: FindSSMParam')
 
     ssm = boto3.client('ssm')
-    res = ssm.describe_parameters(Filters=[{'Name': ('tag:'+tag)}])
-    return True
+    res = ssm.describe_parameters(Filters=[{'Key': (tag),'Values': [value]}])
+
+    try:
+        ssm_info = {
+            'Name': res['Parameters'][0]['Name'],
+            'Value': res['Paremeters'][0][]
+        }
+    except IndexError as e:
+        log.info('Cannot Find Parameter')
+        return False
+
+    return ssm_info
