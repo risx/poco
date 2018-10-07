@@ -35,7 +35,7 @@ async def on_message(message):
 
         await client.send_message(message.channel, embed=em)
 
-    elif message.content.startswith('!ssm'):
+    if message.content.startswith('!ssm'):
         tag_name = message.content.split()[1]
         value_name = message.content.split()[2]
 

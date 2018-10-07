@@ -11,7 +11,7 @@ class ParameterHandler:
         self.value = value
     
     def find(self):
-        log.info('Running: FindSSMParam')
+        log.info('Running: Parameter.find')
 
         ssm = boto3.client('ssm')
         res = ssm.describe_parameters(Filters=[{'Key': (self.tag),'Values': [self.value]}])
@@ -33,7 +33,7 @@ class InstanceHandler:
         self.value = value
 
     def find(self):
-        log.info('Running: findInstance', self.tag, self.value)
+        log.info('Running: InstanceHandler.find')
 
         ec2 = boto3.client('ec2')
         res = ec2.describe_instances(Filters=[{'Name': ('tag:'+self.tag),'Values': [self.value]}])
