@@ -1,0 +1,9 @@
+version: "3"
+services:
+  webapp:
+    build: .
+    env_file:
+      - ./sui-credentials.env
+
+
+# docker-compose up --build
