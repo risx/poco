@@ -1,3 +1,4 @@
 secrets*
 sui-credentials.env
 __pycache__
+.terraform

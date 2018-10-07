@@ -18,7 +18,7 @@ class ParameterHandler:
 
         try:
             ssm_info = {
-                'Name': res['Parameters'][0]['Name'],
+                'Name': res['Parameters'][0]['Name']['Name'],
                 #'Value': res['Paremeters'][0][]
             }
         except IndexError as e:
