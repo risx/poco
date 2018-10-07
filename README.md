@@ -1,4 +1,4 @@
-# poco
+# sui
 A library &amp; bot for controlling aws infrastructure from a chat box
 
 For information on how to setup and run the bot, along with information on interacting with the library refer to the wiki
