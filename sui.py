@@ -18,9 +18,9 @@ class ParameterHandler:
 
         try:
             ssm_info = {
-                'Name': res['Parameters'][0]['Name']['Name'],
-                #'Value': res['Paremeters'][0][]
+                'Name': res['Parameters'][0]['Name']['Name']
             }
+            
         except IndexError as e:
             log.info('Cannot Find Parameter')
             return False
@@ -66,3 +66,34 @@ class InstanceHandler:
             return False
 
         return instanceinfo
+
+    def start(self):
+        log.info('Running: InstanceHandler.start')
+
+        ec2 = boto3.client('ec2')
+        res = ec2.describe_instances(Filters=[{'Name': ('tag:'+self.tag),'Values': [self.value]}])
+
+        try:
+            instance_state = res['Reservations'][0]['Instances'][0]['State']['Name']
+
+        except IndexError as e:
+            log.info('Cannot Find Instance')
+            return False
+
+
+        return True
+
+    def stop(self):
+        log.info('Running: InstanceHandler.stop')
+
+        ec2 = boto3.client('ec2')
+        res = ec2.describe_instances(Filters=[{'Name': ('tag:'+self.tag),'Values': [self.value]}])
+
+        try:
+            instance_state = res['Reservations'][0]['Instances'][0]['State']['Name']
+
+        except IndexError as e:
+            log.info('Cannot Find Instance')
+            return False
+
+        return True
