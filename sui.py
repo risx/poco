@@ -74,7 +74,7 @@ class InstanceHandler:
         res = ec2.describe_instances(Filters=[{'Name': ('tag:'+self.tag),'Values': [self.value]}])
 
         try:
-            instance_state = res['Reservations'][0]['Instances'][0]['State']['Name']
+            ec2.start_instances(InstanceIds=[res['Reservations'][0]['Instances'][0]['InstanceId']])
 
         except IndexError as e:
             log.info('Cannot Find Instance')
@@ -90,7 +90,7 @@ class InstanceHandler:
         res = ec2.describe_instances(Filters=[{'Name': ('tag:'+self.tag),'Values': [self.value]}])
 
         try:
-            instance_state = res['Reservations'][0]['Instances'][0]['State']['Name']
+            ec2.stop_instances(InstanceIds=[res['Reservations'][0]['Instances'][0]['InstanceId']])
 
         except IndexError as e:
             log.info('Cannot Find Instance')

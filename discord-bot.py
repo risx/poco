@@ -35,6 +35,38 @@ async def on_message(message):
 
         await client.send_message(message.channel, embed=em)
 
+    if message.content.startswith('!start'):
+        tag_name = message.content.split()[1]
+        value_name = message.content.split()[2]
+
+        instance = sui.InstanceHandler(tag_name, value_name)
+
+        if (instance.find()):
+            instance_dic = instance.start()
+
+            em = discord.Embed(title='Action', description='Starting Instance...', colour=0x00ff00)
+
+        else:
+            em = discord.Embed(title='Action',description='Instance does not exist, Cannot Start', colour=0xff0000)
+
+        await client.send_message(message.channel, embed=em)
+
+    if message.content.startswith('!stop'):
+        tag_name = message.content.split()[1]
+        value_name = message.content.split()[2]
+
+        instance = sui.InstanceHandler(tag_name, value_name)
+
+        if (instance.find()):
+            instance_dic = instance.stop()
+
+            em = discord.Embed(title='Action', description='Stopping Instance...', colour=0x00ff00)
+
+        else:
+            em = discord.Embed(title='Action',description='Instance does not exist, Cannot Start', colour=0xff0000)
+
+        await client.send_message(message.channel, embed=em)
+
     if message.content.startswith('!ssm'):
         tag_name = message.content.split()[1]
         value_name = message.content.split()[2]
