@@ -44,19 +44,20 @@ async def on_message(message):
 
         #FEATURE: Once buttons are added it would be nice to do this via buttons instead of a text action
         em2 = discord.Embed(title='Actions', description='Start, Stop, None', colour=0x42dcf4)
-        await client.send_message(message.channel, embed=em2)
+        em_action = await client.send_message(message.channel, embed=em2)
 
         action = await client.wait_for_message(timeout=10.0, author=message.author)
         
         if action.content == "start":
             instance.start()
-            em2 = discord.Embed(title='Action Taken', description='Starting', colour=0x42dcf4)
-            await client.send_message(message.channel, embed=em2)
+            em_start = discord.Embed(title='Action Taken', description='Starting', colour=0x42dcf4)
+            await client.edit_message(em_action, embed=em_start)
         elif action.content == "stop":
             instance.stop()
-            em2 = discord.Embed(title='Action Taken', description='Stopping', colour=0x42dcf4)
-            await client.send_message(message.channel, embed=em2)
+            em_stop = discord.Embed(title='Action Taken', description='Stopping', colour=0x42dcf4)
+            await client.edit_message(em_action, embed=em_stop)
         else:
+            await client.delete_message(em_action)
             return
 
         return
