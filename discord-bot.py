@@ -2,6 +2,10 @@ import discord
 import asyncio
 import json
 import sui
+import logging
+
+logging.basicConfig(level=20, format='%(asctime)s: %(name)s | LOG: %(message)s')
+log = logging.getLogger(__name__)
 
 client = discord.Client()
 secrets = ''
@@ -15,6 +19,9 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    if message.author == client.user:
+        return
+
     if message.content.startswith('!instance'):
         tag_name = message.content.split()[1]
         value_name = message.content.split()[2]
@@ -35,37 +42,26 @@ async def on_message(message):
 
         await client.send_message(message.channel, embed=em)
 
-    if message.content.startswith('!start'):
-        tag_name = message.content.split()[1]
-        value_name = message.content.split()[2]
+        #FEATURE: Once buttons are added it would be nice to do this via buttons instead of a text action
+        em2 = discord.Embed(title='Actions', description='Start, Stop, None', colour=0x42dcf4)
+        await client.send_message(message.channel, embed=em2)
 
-        instance = sui.InstanceHandler(tag_name, value_name)
-
-        if (instance.find()):
-            instance_dic = instance.start()
-
-            em = discord.Embed(title='Action', description='Starting Instance...', colour=0x00ff00)
-
+        action = await client.wait_for_message(timeout=10.0, author=message.author)
+        
+        if action.content == "start":
+            instance.start()
+            em2 = discord.Embed(title='Action Taken', description='Starting', colour=0x42dcf4)
+            await client.send_message(message.channel, embed=em2)
+        elif action.content == "stop":
+            instance.stop()
+            em2 = discord.Embed(title='Action Taken', description='Stopping', colour=0x42dcf4)
+            await client.send_message(message.channel, embed=em2)
         else:
-            em = discord.Embed(title='Action',description='Instance does not exist, Cannot Start', colour=0xff0000)
+            return
 
-        await client.send_message(message.channel, embed=em)
+        return
 
-    if message.content.startswith('!stop'):
-        tag_name = message.content.split()[1]
-        value_name = message.content.split()[2]
-
-        instance = sui.InstanceHandler(tag_name, value_name)
-
-        if (instance.find()):
-            instance_dic = instance.stop()
-
-            em = discord.Embed(title='Action', description='Stopping Instance...', colour=0x00ff00)
-
-        else:
-            em = discord.Embed(title='Action',description='Instance does not exist, Cannot Start', colour=0xff0000)
-
-        await client.send_message(message.channel, embed=em)
+ 
 
     if message.content.startswith('!ssm'):
         tag_name = message.content.split()[1]
